@@ -41,6 +41,7 @@ public:
 // FUNCTION 
 
 void addLockerReservation(Locker lockers[], int& currentCount, int maxCapacity);
+void sortLockerId(Locker[], const int&);
 int getValidatedInteger();
 
 
@@ -59,24 +60,25 @@ int main() {
         cout << "=====================================" << endl;
         cout << "1. Add Locker Reservation" << endl;
         cout << "2. Display Locker Reservations (Under Construction)" << endl;
-        cout << "3. Sort Reservations (Under Construction)" << endl;
+        cout << "3. Sort Reservations" << endl;
         cout << "4. Search Reservations (Under Construction)" << endl;
         cout << "5. Exit" << endl;
         cout << "Enter your choice (1-5): ";
+
+        int size = sizeof(gymLockers) / sizeof(gymLockers[0]);
 
         // Verify menu choice input
         choice = getValidatedInteger();
 
         switch (choice) {
         case 1:
-            
             addLockerReservation(gymLockers, currentReservations, MAX_LOCKERS);
             break;
         case 2:
             cout << "\n[Notice] Display feature is not implemented yet." << endl;
             break;
         case 3:
-            cout << "\n[Notice] Sorting feature is not implemented yet." << endl;
+            sortLockerId(gymLockers, currentReservations);
             break;
         case 4:
             cout << "\n[Notice] Searching feature is not implemented yet." << endl;
@@ -151,3 +153,25 @@ void addLockerReservation(Locker lockers[], int& currentCount, int maxCapacity) 
 
     cout << "\nSuccess: Locker reservation added successfully!" << endl;
 }
+
+/**
+ * Made by (B152510010) ARIFF SANUSI
+ * Function: sortLockerId
+ * Sorts the list of lockers by Locker ID in ASCENDING order
+ * Uses the Bubble Sort technique
+ */
+ void sortLockerId(Locker locker[], const int& size) {
+    
+    Locker temp;
+
+    for (int i=0; i<size; i++) {
+
+        for (int j=0; j<size-i-1; j++) {
+            if (locker[j].getLockerId() > locker[j+1].getLockerId()) {
+                temp = locker[j];
+                locker[j] = locker[j+1];
+                locker[j+1] = temp;
+            }
+        }
+    }
+ }
