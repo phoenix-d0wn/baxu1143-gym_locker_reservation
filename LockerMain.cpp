@@ -41,7 +41,8 @@ public:
 // FUNCTION 
 
 void addLockerReservation(Locker lockers[], int& currentCount, int maxCapacity);
-void sortLockerId(Locker[], const int&);
+void sortLockerId(Locker[], const int&, const int&);
+int partition(Locker[], const int&, const int&);
 int getValidatedInteger();
 
 
@@ -78,7 +79,15 @@ int main() {
             cout << "\n[Notice] Display feature is not implemented yet." << endl;
             break;
         case 3:
-            sortLockerId(gymLockers, currentReservations);
+            std::cout << "\nBEFORE";
+            for (int i=0; i<currentReservations; i++) {
+                std::cout << "\n" << gymLockers[i].getLockerId();
+            }
+            sortLockerId(gymLockers, 0, currentReservations-1);
+            std::cout << "\n\nAFTER";
+            for (int i=0; i<currentReservations; i++) {
+                std::cout << "\n" << gymLockers[i].getLockerId();
+            }
             break;
         case 4:
             cout << "\n[Notice] Searching feature is not implemented yet." << endl;
@@ -158,20 +167,41 @@ void addLockerReservation(Locker lockers[], int& currentCount, int maxCapacity) 
  * Made by (B152510010) ARIFF SANUSI
  * Function: sortLockerId
  * Sorts the list of lockers by Locker ID in ASCENDING order
- * Uses the Bubble Sort technique
+ * Uses the Quick Sort technique
  */
- void sortLockerId(Locker locker[], const int& size) {
-    
-    Locker temp;
+void sortLockerId(Locker locker[], const int& low, const int& high) {
 
-    for (int i=0; i<size; i++) {
+    if (low < high) {
 
-        for (int j=0; j<size-i-1; j++) {
-            if (locker[j].getLockerId() > locker[j+1].getLockerId()) {
-                temp = locker[j];
-                locker[j] = locker[j+1];
-                locker[j+1] = temp;
-            }
+        int pivotIndex = partition(locker, low, high);
+        sortLockerId(locker, low, pivotIndex-1);
+        sortLockerId(locker, pivotIndex+1, high);
+    }
+}
+
+// helper function for sortLockerId()
+int partition(Locker locker[], const int& low, const int& high) {
+
+    Locker pivot = locker[high];
+    int i = low - 1;
+
+    for (int j = low; j < high; j++) {
+
+        if (locker[j].getLockerId() < pivot.getLockerId()) {
+
+            i++;
+
+            // swap elements in index i & j
+            Locker temp = locker[i];
+            locker[i] = locker[j];
+            locker[j] = temp;
         }
     }
- }
+
+    // move the last element to index i+1
+    Locker temp = locker[i+1];
+    locker[i+1] = locker[high];
+    locker[high] = temp;
+
+    return i+1;
+}
