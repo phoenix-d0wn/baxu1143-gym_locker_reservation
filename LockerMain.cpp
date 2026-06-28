@@ -2,40 +2,9 @@
 #include <string>
 #include <limits> // FOR PREVENTING INFINITE LOOPS ON INVALID INPUTS
 
+#include "Locker.h"
+
 using namespace std;
-
-// ==========================================
-// CLASS DEFINITION
-// ==========================================
-
-class Locker {
-private:
-    int lockerId;
-    string memberName;
-    string duration;
-    bool isReserved;
-
-public:
-    //  Constructor
-    Locker() {
-        lockerId = 0;
-        memberName = "";
-        duration = "";
-        isReserved = false;
-    }
-
-    void setLockerDetails(int id, string name, string dur) {
-        lockerId = id;
-        memberName = name;
-        duration = dur;
-        isReserved = true;
-    }
-
-    int getLockerId() { return lockerId; }
-    string getMemberName() { return memberName; }
-    string getDuration() { return duration; }
-    bool getReservationStatus() { return isReserved; }
-};
 
 // ==========================================
 // FUNCTION DECLARATIONS 
@@ -182,7 +151,7 @@ void addLockerReservation(Locker lockers[], int& currentCount, int maxCapacity) 
 /**
  * Made by (B152510010) ARIFF SANUSI
  * Function: sortLockerId
- * Sorts the list of lockers by Locker ID in ASCENDING order
+ * Sorts the list of locker reservations by the Locker ID in ASCENDING order
  * Uses the Quick Sort technique
  */
 void sortLockerId(Locker locker[], const int& low, const int& high) {
@@ -195,6 +164,11 @@ void sortLockerId(Locker locker[], const int& low, const int& high) {
     }
 }
 
+/**
+ * Made by (B152510010) ARIFF SANUSI
+ * Function: partition
+ * Helper function for quick sort
+ */
 // helper function for sortLockerId()
 int partition(Locker locker[], const int& low, const int& high) {
 
